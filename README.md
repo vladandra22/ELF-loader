@@ -1,7 +1,4 @@
-******** TEMA 1 SO ********
+# ELF Loader
 
-1. Introducere
-	In aceasta tema, am aprofundat concepte precum tratarea semnalelor, demand paging, mmap si legatura intre VAS si spatiul fizic, formatul fisierelor ELF,  page fault si mprotect. Implementarea programului in C a necesitat destul de mult research legat de functiile folosite. A durat mult mai mult decat partea de coding partea de intelegere a pasilor ce trebuie executati, ceea ce a dus la buna intelegere a conceptelor. Tratarea cazului in care avem file_size < mem_size a fost cu siguranta cea mai costisitoare ca si timp. Focusul temei a fost cu siguranta mai degraba intelegerea conceptelor decat implementarea in sine. De asemenea, nu consider ca am avut foarte multe tool-uri ca sa ne dam seama ce gresim, checker-ul nu a fost nici el foarte intuitiv si a necesitat sa incercam cat mai multe lucruri pana cand ne-am dat seama ce functioneaza. Apreciez la aceasta tema ca a fost foarte important sa intelegem mai intai ce se intampla cu adevarat in spate.
-
-2. Implementare
-	Dupa parsarea fisierului binar ELF (so_exec), se executa entry_point-ul. Deoarece executabilul nu este alocat in memorie, generam page-fault-ul. Handler-ul semnalului de Segmentation Fault SIGSEGV verifica daca avem permisiunile necesare accesarii zonei de memorie si, in caz pozitiv, mapeaza pagina in memorie si umplem cu 0-uri cu memset. Tratarea cazului de file_size < mem_size se intampla atunci cand ceea ce citim se opreste in interiorul unei pagini si se va completa cu 0-uri restul. In functie de marimea cu care completam cu 0-uri setam offset-ul paginii si citim de la acea sectiune de pagina in memoria mapata. In final, deoarece initial am apelat mmap cu permisiuni de scriere, vom modifica prin mprotect permisiunile paginii la cele ale segmentului. 
+This project is part of my homework for Operating Systems. Its purpose is to understand how an executable is loaded and run by the OS and how to treat memory exceptions. 
+It implements a page fault handler which is realized with a SIGSEGV treatment routine. Main part was handling the demand paging algorithm and working with the Linux API.
